@@ -19,9 +19,18 @@ def calculate_basic_user_data():
             "You must type a "
             "whole or decimal number\nin both fields."
         )
+def health():
+    zdravy = "Tvoje zdraví vypadá dobře, jen tak dál!"
+    nezdravy = "Tvoje zdraví nevypadá dobře, koukej to napravit!"
+    if psychical_health_slider.value > 50 or activity_cbox.value == True:
+        bmr_text_2.value = f"{zdravy}"
+    else:
+        bmr_text_2.value = f"{nezdravy}"
 
+
+    
 ###GUI App
-app = App(title="Fat Burner", width=775, height=775)
+app = App(layout="auto", title="Fat Burner", width=775, height=775)
 
 ##MAIN WINDOW
 window1 = Box(app)
@@ -43,13 +52,24 @@ optimal_fat_header = Text(
     text=(f"Please enter your weight in kilograms (kg):")
 )
 optimal_fat_txtbox = TextBox(window1)
+psychical_health_header = Text(
+    window1,
+    text=("On the scale of 10 to 100 how are you mentally healthy?")
+)
+psychical_health_slider = Slider(window1)
+activity_header = Text(
+    window1,
+    text=("I am a physically active person")
+)
+activity_cbox = CheckBox(window1)
 button = PushButton(
     window1,
-    command=calculate_basic_user_data,
+    command=lambda: [calculate_basic_user_data(), health()],
     text="Calculate My Calorie Maintenance Level"
 )
 
 bmr_text = Text(window1, text="")
+bmr_text_2 = Text(window1, text="")
 
 # Display an image
 image_widget = Picture(
